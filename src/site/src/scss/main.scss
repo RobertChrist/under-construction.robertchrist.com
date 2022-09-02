@@ -1,0 +1,80 @@
+@use "_base";
+@use "_config";
+@use "components";
+
+html,
+body {
+  height: 100vh;
+  width: 100vw;
+  background-color: config.get_palette(bg);
+  color: config.get_palette(fg);
+  min-width: config.get_misc(page-min-width); // We will no longer be responsive <250px;
+  min-height: config.get_misc(page-min-height);
+  overflow-y:auto;
+}
+
+.container {
+  height:100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  height: 100% - config.get_misc(top-bar-height);
+  width: 100%;
+  overflow-y:hidden;
+  top: config.get_misc(top-bar-height);
+
+  &--column {
+    height: 100%;
+    width: 57%;
+    min-width: max-content;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    display: flex;
+  }
+
+  &--flex-column {
+    flex-direction: column;
+  }
+}
+
+/* Responsive Design Layout
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media (max-width: 900px) {
+  .contact-form {
+    margin-right: auto;
+
+    &__form {
+      background-color: config.get_palette(bg-partially-opaque);
+    }
+  }
+
+  .header__content-container {
+    text-align: center;
+  }
+}
+
+@media (max-width: 490px) {
+  .contact-form, .contact-form textarea, .contact-form input, .contact-form__no-script-display{
+    width: 100%;
+  }
+
+  .content--column {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 350px) {
+  .content--column {
+    padding: 0px;
+  }
+  
+  .image-credit {
+    width:100%;
+    border-top-right-radius: 0;
+  }
+}

@@ -1,0 +1,49 @@
+@use "../_config";
+
+contact-links, .contact-links {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  flex:1;
+  min-height: 33rem;
+
+  &__content {
+    width: max-content;
+  }
+
+  &__content-text {
+    background-color: config.get_palette(bg);
+    padding: 1.5rem;
+    border-radius: config.get_misc(section-border-radius);
+    text-align: center;
+
+    &--no-underline {
+      text-decoration: none;
+    }
+  }
+
+  &__content-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+
+    [class^="icon-"],
+    [class*=" icon-"] {
+      display: inline-block;
+      stroke: config.get_palette(bg-opaque);
+      fill: config.get_palette(bg-partially-opaque);
+      height: 4.75rem;
+      width: 4.75rem;
+      padding-top:1.5rem;
+      margin:0;
+    }
+  }
+}
+
+body.js-off .contact-links__content-text .if-js-on {
+  display:none;
+}
+
+body.js-on .contact-links__content-text .if-js-off {
+  display:none;
+}

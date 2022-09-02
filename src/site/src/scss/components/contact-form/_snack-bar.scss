@@ -1,0 +1,78 @@
+@use "../../_config";
+
+.contact-form {
+  &__toast-message {
+      animation: toast-message-slide-in config.get_duration(toast-slide) linear;
+  }
+  
+  &__toast {
+    text-align: center;
+    position: relative;
+    z-index: -2;
+    animation: toast-slide-in config.get_duration(toast-slide) linear;
+    transition: opacity 1s ease-in-out, border-radius .4s ease-in-out .1s;
+
+    &:first-child {
+      margin-top: config.get_misc(section-border-radius) * -1;
+      padding-top: config.get_misc(section-border-radius);
+    }
+
+    &--success {
+      color:config.get_palette(bg-opaque);
+      background-color: config.get_palette(success);
+    }
+
+    &--error {
+      color:config.get_palette(fg-light);
+      background-color: config.get_palette(failure);
+    }
+
+    &--deleting {
+      opacity: 0;
+    }
+  }
+
+  &__toast:last-child,
+  &__toast--new-bottom,
+  &__form,
+  &__no-script-display {
+    border-bottom-left-radius: config.get_misc(section-border-radius);
+    border-bottom-right-radius: config.get_misc(section-border-radius)
+  }
+}
+
+/* We desire for the toast to appear to be sliding in from underneath the
+ * contact form on the webpage, pushing down the list of other toast messages
+ * that may already exist on the page as it does.  To ensure that this "push" occurs 
+ * smoothly, we insert the new toast element, and then animate the element 
+ * growing from 0px to full size in height.  This prevents the browser from 
+ * automatically pushing the list of items down the moment a new element is added
+ * to the top of the list, because new elements are added with a height of 0.
+ * 
+ * As the height grows, the list elongates in a smooth animation.  
+ * However, if this was the only animation, then the text would appear to also grow
+ * with the element.  This makes it look like the element is growing in place, 
+ * instead of sliding into position.  So now we animate the text
+ * itself with a transformY from under under the contact
+ * form at the same rate and speed as the height animation.  
+ * 
+ * If this is timed correctly, this results in the text sliding into position,
+ * into a new element, that is growing and pushing the list down smoothly, and results
+ * in the new element appearing to slide into the top of the list. */
+@keyframes toast-message-slide-in {
+  0% {
+    transform: translateY(-2rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes toast-slide-in {
+  0% {
+    height: 0px;
+  }
+  100% {
+    height: 2.4rem;
+  }
+}

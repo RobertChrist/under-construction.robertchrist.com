@@ -1,0 +1,17 @@
+{
+  "name": "puppeteer-layer",
+  "version": "1.0.0",
+  "description": "NodeJS module of puppeteer-core using chrome-aws-lambda for use as an Aws Lambda Layer",
+  "main": "index.js",
+  "scripts": {
+    "build": "./build.sh",
+    "deploy": "./publish.sh",
+    "push": "npm run build && npm run deploy"
+  },
+  "author": "Robert Christ",
+  "license": "ISC",
+  "dependencies": {
+    "chrome-aws-lambda": "~10.1.0",
+    "puppeteer-core": "10.1.*"
+  }
+}

@@ -1,0 +1,17 @@
+@use "../_config";
+
+.image-credit{
+  position:absolute;
+  bottom:0px;
+  left:0px;
+  color:config.get-palette(fg);
+  background-color: config.get-palette(bg-opaque);
+  padding:1rem;
+  opacity:.8;
+  transition: opacity config.get_duration(bg-transition) ease;
+  border-top-right-radius: config.get_misc(section-border-radius);
+
+  &--hidden {
+    opacity: 0;
+  }
+}

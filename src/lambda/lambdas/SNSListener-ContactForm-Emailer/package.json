@@ -1,0 +1,63 @@
+{
+  "name": "snslistener-contactform-emailer",
+  "version": "1.0.0",
+  "description": "Sends a contact email on behalf of the UnderConstruction repository, available at https://github.com/RobertChrist",
+  "main": "src/index.js",
+  "scripts": {
+    "lint": "(npm list eslint || npm install --only=dev) && eslint .",
+    "build": "npm prune --production && bash -c 'rm -f ./dist/*; zip -r ./dist/snslistener-contactform-emailer.zip .'",
+    "deploy": "bash -c 'cd dist; aws lambda update-function-code --function-name snslistener-contactform-emailer --zip-file fileb://snslistener-contactform-emailer.zip'",
+    "push": "npm run build && npm run deploy"
+  },
+  "author": "Robert Christ",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "googleapis": "^89.0.0",
+    "nodemailer": "^6.7.0"
+  },
+  "notes": {
+    "lambda version": "Tested and deployed with node 14.18.1, as aws lambda supports node 14 as latest"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "google"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 13,
+      "sourceType": "module"
+    },
+    "rules": {
+      "max-len": [
+        2,
+        120,
+        2
+      ],
+      "curly": [
+        2,
+        "multi-or-nest",
+        "consistent"
+      ],
+      "eol-last": [
+        2,
+        "never"
+      ],
+      "operator-linebreak": [
+        2,
+        "before"
+      ],
+      "indent": 0,
+      "require-jsdoc": 0,
+      "one-var": 0,
+      "padded-blocks": 0
+    }
+  }
+}

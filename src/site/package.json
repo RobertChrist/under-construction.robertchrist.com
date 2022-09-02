@@ -1,0 +1,133 @@
+{
+  "name": "under-construction",
+  "version": "1.0.0",
+  "description": "I have a number of personal side projects, but not all are ready to release.  It would be nice to have a default \"Coming Soon\" page I could put on a url, instead of the default namecheap.com splash page, or a dead link.",
+  "private": true,
+  "comments": {
+    "organization": "Scripts are broken out by components.  Static assets, css, js, and html are all handled separately since this is a static content application",
+    "primary commands": "Commands that are not prefixed with an asset type {css, js, static, etc} are the primary commands.",
+    "command organization": "static assets are handled by bash, css is handled by sass for preprocess and postcss for post-processing.  Webpack handles js, and running a local dev server."
+  },
+  "scripts": {
+    "static:lint": "html-validator --file=./src/index.html",
+    "static:build": "bash -c 'cp -r ./src/{css,images,index.html} ./dist'",
+    "css:lint": "npx stylelint 'src/**/*.scss'",
+    "css:preprocess": "sass src/scss/:dist/css --no-source-map",
+    "css:postprocess": "npx postcss dist/css/*.css --replace --no-map --verbose",
+    "css:watch": "sass --watch src/scss/:dist/css --no-source-map",
+    "js:lint": "webpack --config webpack.prod.js",
+    "js:build": "webpack --config webpack.prod.js",
+    "js:watch": "webpack serve --config webpack.dev.js",
+    "wipe": "bash -c 'rm -rf ./dist/*'",
+    "lint": "npm run static:lint && npm run css:lint && npm run js:lint",
+    "build": "npm run wipe && npm run lint && npm run static:build && npm run css:preprocess && npm run css:postprocess && npm run js:build",
+    "watch": "npm run wipe && npm run static:build && npm run css:preprocess && concurrently --kill-others \"npm run js:watch\" \"npm run css:watch\"",
+    "deploy": "bash -c 'aws s3 rm s3://under-construction/ --recursive && aws s3 cp ./dist s3://under-construction/ --recursive && aws cloudfront create-invalidation --distribution-id E2F85ORQR3T6ZX --paths \"/*\"'",
+    "push": "npm run build && npm run deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:rc-libs/active-projects/under-construction.git"
+  },
+  "author": "Robert Christ",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/plugin-transform-runtime": "^7.16.4",
+    "@babel/preset-env": "^7.15.8",
+    "@fullhuman/postcss-purgecss": "^4.0.3",
+    "autoprefixer": "^10.3.7",
+    "babel-loader": "^8.2.2",
+    "concurrently": "^6.3.0",
+    "cssnano": "^5.0.8",
+    "dotenv-webpack": "^7.1.0",
+    "eslint": "^8.3.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-webpack-plugin": "^3.1.1",
+    "html-validator": "^6.0.0",
+    "html-validator-cli": "^7.0.1",
+    "html-webpack-plugin": "^5.3.2",
+    "postcss": "^8.3.9",
+    "postcss-cli": "^9.0.1",
+    "sass": "^1.42.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-sass-guidelines": "^8.0.0",
+    "stylelint-config-standard": "^22.0.0",
+    "webpack": "^5.58.1",
+    "webpack-cli": "^4.9.0",
+    "webpack-dev-server": "^4.3.1",
+    "webpack-merge": "^5.8.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "google"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 13,
+      "sourceType": "module"
+    },
+    "rules": {
+      "max-len": [
+        2,
+        120,
+        2
+      ],
+      "curly": [
+        2,
+        "multi-or-nest",
+        "consistent"
+      ],
+      "eol-last": [
+        2,
+        "never"
+      ],
+      "operator-linebreak": [
+        2,
+        "before"
+      ],
+      "indent": 0,
+      "require-jsdoc": 0,
+      "one-var": 0,
+      "padded-blocks": 0
+    }
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard",
+      "stylelint-config-sass-guidelines",
+      "stylelint-config-prettier"
+    ],
+    "rules": {
+      "order/properties-alphabetical-order": null,
+      "color-named": null,
+      "scss/at-function-pattern": null,
+      "max-nesting-depth": null,
+      "length-zero-no-unit": null,
+      "selector-class-pattern": null,
+      "selector-no-qualifying-type": null
+    }
+  },
+  "browserslist": "> 0.2%, last 2 versions, Firefox ESR, not dead",
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {},
+      "@fullhuman/postcss-purgecss": {
+        "content": [
+          "**/*.html",
+          "**/*.js"
+        ],
+        "safelist": [
+          "background__imgHolder--movement"
+        ]
+      },
+      "cssnano": {
+        "preset": "default"
+      }
+    }
+  }
+}

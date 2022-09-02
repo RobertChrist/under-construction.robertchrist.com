@@ -1,0 +1,63 @@
+{
+  "name": "cwevent-contactform-integrationtester",
+  "version": "1.0.0",
+  "description": "Navigates to a website that hosts the current repository, and submits a contact request, to ensure the entire pipeline is working correctly.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "(npm list eslint || npm install --only=dev) && eslint .",
+    "build": "npm prune --production && bash -c 'rm -f ./dist/*; zip -r ./dist/cwevent-contactform-integrationtester.zip .'",
+    "deploy": "bash -c 'cd dist; aws lambda update-function-code --function-name cwevent-contactform-integrationtester --zip-file fileb://cwevent-contactform-integrationtester.zip'",
+    "updateLayerVersion": "aws lambda update-function-configuration --function-name cwevent-contactform-integrationtester --layers arn:arn:aws:lambda:us-east-1:831399332625:layer:puppeteer-layer:2",
+    "push": "npm run lint && npm run build && npm run deploy"
+  },
+  "author": "Robert Christ",
+  "license": "ISC",
+  "notes": {
+    "lambda version": "Tested and deployed with node 14.18.1, as aws lambda supports node 14 as latest"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "googleapis": "^92.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "eslint-config-google": "^0.14.0"
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": [
+      "google"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 13,
+      "sourceType": "module"
+    },
+    "rules": {
+      "max-len": [
+        2,
+        120,
+        2
+      ],
+      "curly": [
+        2,
+        "multi-or-nest",
+        "consistent"
+      ],
+      "eol-last": [
+        2,
+        "never"
+      ],
+      "operator-linebreak": [
+        2,
+        "before"
+      ],
+      "indent": 0,
+      "require-jsdoc": 0,
+      "one-var": 0,
+      "padded-blocks": 0
+    }
+  }
+}

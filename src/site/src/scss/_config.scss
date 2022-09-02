@@ -1,0 +1,74 @@
+/// Gets a configuration value.
+/// @param {string} $keys Key(s).
+/// @return {string} Value.
+
+@function get_misc($keys...) {
+  @return map-get($_misc, $keys...);
+}
+
+@function get_font($keys...) {
+  @return map-get($_font, $keys...);
+}
+
+@function get_palette($keys...) {
+  @return map-get($_palette, $keys...);
+}
+
+@function get_duration($keys...) {
+  @return map-get($_duration, $keys...);
+}
+
+$_misc: (
+  top-bar-height: 22%,
+  section-border-radius: 1.5rem,
+  contact-form-width: 40rem,
+  contact-form-padding: 2rem,
+  page-min-width: 250px,
+  page-min-height: 930px
+);
+
+$_duration: (
+  bg-fadein: 2s,
+  bg-transition: 3s,
+  
+  // how long should the background slide effect take.  Must be longer than js image rotation time.
+  bg-slide: 14s,
+  
+  // A value of 25 will scale a 100px wide picture to 125, then slide the picture 25px during the effect.,,,,,,,,,,,,
+  bg-slide-percentage: 3,
+
+  // On smaller screens, the same amount of absolute amount of movement feels significantly faster,
+  // yet because the screen is so small, a mere few % of movement can be unnoticably small.  We could increase
+  // the speed slowly on smaller devices via media queries, but we have instead adopted a minimum speed for the background.
+  bg-slide-min-distance-px: 21px,
+  
+  toast-slide: .5s,
+  contact-form-hide: 1s 
+);
+
+$_font: (
+  family: (
+    "raleway", "helveticaneue", "helvetica neue", helvetica, arial,sans-serif
+  ),
+  weight: 400,
+);
+
+$_palette: (
+  bg: rgba(16, 16, 19, .6), //#101013,
+  bg-partially-opaque: rgba(16, 16, 19, .95), //#101013,
+  bg-opaque: #101013,
+  bg-code: #f1f1f1,
+  bg-disabled: rgba(59, 59, 59, 1),
+  fg: #fff,
+  fg-light: #d1d1d1,
+  fg-dark: black,
+  input-bg: transparent,
+  border-color: #efefef,
+  border-color-disabled:rgba(16, 16, 19, .8),
+  accent: #1eaedb,
+  accent-hover: #0fa0ce,
+  accent-focus: #33c3f0,
+  grid-lines: #e1e1e1,
+  success: rgba(0, 179, 138, .8),
+  failure: rgba(176, 0, 32, .8)
+);
