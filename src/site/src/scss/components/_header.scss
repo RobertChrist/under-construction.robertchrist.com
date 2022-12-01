@@ -4,7 +4,7 @@ header, .header {
   position: relative;
   height: config.get_misc(top-bar-height);
   width: 100%;
-  background-color:config.get_palette(bg);
+  background: linear-gradient(to bottom, config.get_palette(bg), config.get_palette(bg-partially-opaque) 90%);
 
   &__container {
     height:100%;

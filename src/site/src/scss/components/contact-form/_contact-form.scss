@@ -18,7 +18,7 @@
 
   &__form {
     position:relative;
-    background-color: config.get_palette(bg-opaque);
+    background: linear-gradient(to bottom, config.get_palette(bg-partially-opaque), config.get_palette(bg-opaque) 30%);
     padding: 2rem;
     margin-bottom:0px;
   }
