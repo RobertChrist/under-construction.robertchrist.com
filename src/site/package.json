@@ -10,7 +10,7 @@
   },
   "scripts": {
     "static:lint": "html-validator --file=./src/index.html",
-    "static:build": "bash -c 'cp -r ./src/{css,images,index.html} ./dist'",
+    "static:build": "bash -c 'cp -r ./src/{css,images,index.html,*.png,browserconfig.xml,favicon.ico,*.svg,site.webmanifest} ./dist'",
     "css:lint": "npx stylelint 'src/**/*.scss'",
     "css:preprocess": "sass src/scss/:dist/css --no-source-map",
     "css:postprocess": "npx postcss dist/css/*.css --replace --no-map --verbose",
