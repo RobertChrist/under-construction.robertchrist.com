@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:rc-libs/active-projects/under-construction.git"
+    "url": "git@github.com:RobertChrist/under-construction.robertchrist.com.git"
   },
   "author": "Robert Christ",
   "license": "MIT",
