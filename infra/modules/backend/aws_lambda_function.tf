@@ -9,7 +9,7 @@ resource "aws_lambda_function" "snslistener_contactform_emailer" {
   runtime                        = "nodejs14.x"
 
   // Optional, used to track currently deployed source code version.
-  source_code_hash               = "4JIC0C1G5w1b65ARPenV9yf7qH73DZP6LXYsSgskM3Y="
+  source_code_hash               = var.lambda__snslistener_contactform_emailer__source_code_hash
   timeout                        = "3"
 
   tracing_config {

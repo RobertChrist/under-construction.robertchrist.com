@@ -14,7 +14,7 @@ resource "aws_lambda_function" "cwevent_contactform_integrationtester" {
   runtime                        = "nodejs14.x"
 
   // Optional, used to track currently deployed source code version.
-  source_code_hash               = "Y1Hl0lgsRR1ovQHN7iPcy/ZacwfZ10YkXOEYtOAmKes="
+  source_code_hash               = var.lambda__cw_contact_form_integrationtester__source_code_hash
   timeout                        = "120"
 
   tracing_config {

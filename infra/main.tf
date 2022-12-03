@@ -28,21 +28,23 @@ module "email" {
 module "backend" {
   source = "./modules/backend"
 
-  aws_account_id                              = var.aws_account_id
-  phone_number_to_sms_on_contact_request      = var.phone_number_to_sms_on_contact_request
-  email_address_to_message_on_contact_request = var.email_address_to_message_on_contact_request
-  sms_from_contact_name                       = var.sms_from_contact_name
-  project_name                                = var.project_name
-  project_hostname                            = var.project_hostname
-  aws_region                              	  = var.aws_region
-  aws_hosted_zone_id                          = module.website.aws_route53_zone__project_hosted_zone__zone_id
+  aws_account_id                                            = var.aws_account_id
+  phone_number_to_sms_on_contact_request                    = var.phone_number_to_sms_on_contact_request
+  email_address_to_message_on_contact_request               = var.email_address_to_message_on_contact_request
+  sms_from_contact_name                                     = var.sms_from_contact_name
+  project_name                                              = var.project_name
+  project_hostname                                          = var.project_hostname
+  aws_region                              	                = var.aws_region
+  aws_hosted_zone_id                                        = module.website.aws_route53_zone__project_hosted_zone__zone_id
+  lambda__snslistener_contactform_emailer__source_code_hash = var.lambda__snslistener_contactform_emailer__source_code_hash
 }
 
 module "integration_testing" {
   source = "./modules/integration_testing"
 
-  project_name                                = var.project_name
-  aws_iam_role__lambda__log_to_cloudwatch_arn = module.backend.aws_iam_role__lambda__log_to_cloudwatch_arn
+  project_name                                                = var.project_name
+  aws_iam_role__lambda__log_to_cloudwatch_arn                 = module.backend.aws_iam_role__lambda__log_to_cloudwatch_arn
+  lambda__cw_contact_form_integrationtester__source_code_hash = var.lambda__cw_contact_form_integrationtester__source_code_hash
 }
 
 module "monitoring" {

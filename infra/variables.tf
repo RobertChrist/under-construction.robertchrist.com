@@ -117,6 +117,12 @@ variable "aws_region" {
   nullable    = false
 }
 
+variable "lambda__snslistener_contactform_emailer__source_code_hash" {
+  type        = string
+  description = "We track the source code hash of our lambdas in our secrets.auto.tfvars file, since we want to track what version is deployed to production, but shouldn't need to make a new commit in the code repository on each deploy."
+  nullable    = false
+}
+
 # For use by monitoring
 variable "sumologic_access_id" {
   type        = string
@@ -146,5 +152,12 @@ variable "sumologic_deployment_location" {
 variable "email_address_to_alert_on_sumologic_ingest_failure" {
   type        = string
   description = "If the SumoLogic CloudWatch Log Ingestion pipeline fails, what email address should be notified?"
+  nullable    = false
+}
+
+#For use by Integration Testing
+variable "lambda__cw_contact_form_integrationtester__source_code_hash" {
+  type        = string
+  description = "We track the source code hash of our lambdas in our secrets.auto.tfvars file, since we want to track what version is deployed to production, but shouldn't need to make a new commit in the code repository on each deploy."
   nullable    = false
 }

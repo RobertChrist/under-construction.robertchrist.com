@@ -45,3 +45,9 @@ variable "aws_hosted_zone_id" {
   description = "We assume that api.project_name will be hosten in the same aws route 53 hosted zone as project_name itself.  So pass that value from the website/parent module in here"
   nullable    = false
 }
+
+variable "lambda__snslistener_contactform_emailer__source_code_hash" {
+  type        = string
+  description = "We track the source code hash of our lambdas in our secrets.auto.tfvars file, since we want to track what version is deployed to production, but shouldn't need to make a new commit in the code repository on each deploy."
+  nullable    = false
+}
