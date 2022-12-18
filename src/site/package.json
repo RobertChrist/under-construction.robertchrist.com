@@ -25,6 +25,10 @@
     "deploy": "bash -c 'aws s3 rm s3://under-construction/ --recursive && aws s3 cp ./dist s3://under-construction/ --recursive && aws cloudfront create-invalidation --distribution-id E2F85ORQR3T6ZX --paths \"/*\"'",
     "push": "npm run build && npm run deploy"
   },
+  "engines": {
+    "node": ">=v16.10.0",
+    "npm": ">=7.24.0"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:RobertChrist/under-construction.robertchrist.com.git"
