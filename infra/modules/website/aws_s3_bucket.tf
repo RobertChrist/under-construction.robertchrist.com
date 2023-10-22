@@ -1,10 +1,8 @@
 # under-construction.robertchrist.com is hosted out of an aws s3 bucket fronted by a CloudFront distribution.
 
 resource "aws_s3_bucket" "primary_bucket" {
-  arn            = "arn:aws:s3:::${var.project_name}"
   bucket         = var.project_name
   force_destroy  = "false"
-  hosted_zone_id = "Z3AQBSTGFYJSTF"
 }
 
 resource "aws_s3_bucket_policy" "primary_bucket" {
@@ -41,8 +39,6 @@ resource "aws_s3_bucket_website_configuration" "primary_bucket" {
 }
 
 resource "aws_s3_bucket" "logs" {
-  arn            = "arn:aws:s3:::logs.${var.project_name}"
   bucket         = "logs.${var.project_name}"
   force_destroy  = "false"
-  hosted_zone_id = "Z3AQBSTGFYJSTF"
 }

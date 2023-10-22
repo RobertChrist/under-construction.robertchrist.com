@@ -15,4 +15,9 @@ resource "aws_lambda_function" "snslistener_contactform_emailer" {
   tracing_config {
     mode = "PassThrough"
   }
+
+  filename                       = "codeIsHandledViaCICDPipeline.zip"
+  lifecycle {
+    ignore_changes              = [filename]
+  }
 }

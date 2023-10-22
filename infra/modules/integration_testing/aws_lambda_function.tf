@@ -20,4 +20,9 @@ resource "aws_lambda_function" "cwevent_contactform_integrationtester" {
   tracing_config {
     mode = "PassThrough"
   }
+
+  filename                       = "codeIsHandledViaCICDPipeline.zip"
+  lifecycle {
+    ignore_changes              = [filename]
+  }
 }
