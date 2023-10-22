@@ -78,7 +78,7 @@ class ContactForm {
 
         await delay(820); // I've found that adding a delay here is aesthetically pleasing.
 
-        this.#snackBar.addToast('Please Let Me Know, via Contact@RobertChrist.com.  Sorry!', false);
+        this.#snackBar.addToast('Please let me know via Contact@RobertChrist.com.  Sorry!', false);
       }
     }
 
