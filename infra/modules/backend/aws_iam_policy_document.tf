@@ -115,6 +115,14 @@ data "aws_iam_policy_document" "sns__assume_role" {
   }
 }
 
+data "aws_iam_policy_document" "lambda__allow_sns_publish" {
+  statement {
+    actions       = ["sns:Publish"]
+    effect        = "Allow"
+    resources     = ["*"]
+  }
+}
+
 # ----------------------- Compound Statements ----------------------
 
 data "aws_iam_policy_document" "sns_topic__allow_publish_for_api_gateway_or_owner_account" {

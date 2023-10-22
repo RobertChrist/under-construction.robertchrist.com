@@ -5,13 +5,6 @@ resource "aws_sns_topic_subscription" "contact_request__lambda" {
   topic_arn            = aws_sns_topic.contact_request.arn
 }
 
-resource "aws_sns_topic_subscription" "contact_request__sms" {
-  endpoint             = var.phone_number_to_sms_on_contact_request
-  protocol             = "sms"
-  raw_message_delivery = "false"
-  topic_arn            = aws_sns_topic.contact_request.arn
-}
-
 resource "aws_sns_topic_subscription" "contact_request__email" {
   endpoint             = var.email_address_to_message_on_contact_request
   protocol             = "email"

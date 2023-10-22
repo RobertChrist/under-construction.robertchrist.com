@@ -19,3 +19,15 @@ variable "s3_header_secret_key" {
     error_message = "The s3_header_secret_key should be a guid or long string."
   }
 }
+
+variable "google_project_id" {
+  type        = string
+  description = "The id of the google project terraform should connect to."
+  nullable    = false
+}
+
+variable "google_recaptcha_key_name" {
+  type        = string
+  description = "The name of the google recaptcha key."
+  nullable    = false
+}

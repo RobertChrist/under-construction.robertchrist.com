@@ -22,7 +22,7 @@ All source code for all of the above, as well as all Cloud component definitions
 Each component in this repository includes deployment scripts and example config files you can use for reference.  I suggest cloning this repository, then modifying it to meet the requirements of the CI/CD and secret management pipeline of your choice. 
   * All components in the [`/src`](/src) folder use .env files symlinked to a nonexistent Secrets directory.  Replace these symlinks with .env files of your own, using the provided .env.example files for reference.
   * [`/infra/provider.tf`](/infra/provider.tf) defines the terraform state file, and cloud credentials files to exist in the nonexistent secrets folder.  Replace these with your own provider credentials and desired tfState location/backend, then run `terraform init`.
-  * `/infra/secrets.auto.tfvars` - Is a smylink to a file to the nonexistent Secrets directory with the same path.  Replace this file by with a new auto.tfvars file using [`/infra/variables.tf`](/infra/variables.tf) as a reference.
+  * `/infra/secrets.auto.tfvars` - Is a smylink to a file to the nonexistent Secrets directory with the same path.  Replace this file with a new auto.tfvars file using [`/infra/variables.tf`](/infra/variables.tf) as a reference.
 
 ## Source Files
 All project source files are found in the project's [/src](/src) folder.
@@ -68,6 +68,11 @@ This module is responsible for defining all CloudWatch and CloudFront logs, ensu
 
 * **Integration_Testing**
 This module is responsible for all configuration required to run weekly integration tests on the live production website and pipeline.
+
+## Security
+  This website generates a publicly accessible api to allow website visitors to leave contact messages for the website owner.
+  These rate-limited and capped requests are required to include a secret key, which can be rotated quickly via terraform command.
+  Google Recaptcha has also been implemented to give a configurable second layer of defense.
 
 ## Compatibility
 This website was manually tested and verified on a wide range of physical devices.

@@ -6,3 +6,8 @@ output "aws_api_gateway_required_header_key_value" {
 output "aws_api_gateway_contact_request_model_definition" {
   value = "is available at module.backend.aws_api_gateway_model.contact_form__post.schema"
 }
+
+output "recaptcha_secret_key" {
+  value = var.recaptcha_secret_key
+  sensitive = true
+}

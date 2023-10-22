@@ -4,7 +4,8 @@ module "website" {
   project_name         = var.project_name
   project_hostname     = var.project_hostname
   s3_header_secret_key = var.s3_header_secret_key
-
+  google_project_id    = var.google_project_id
+  google_recaptcha_key_name = var.google_recaptcha_key_name
 }
 
 module "email" {

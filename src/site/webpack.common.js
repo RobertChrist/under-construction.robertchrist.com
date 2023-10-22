@@ -1,7 +1,10 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+// Load .env into webpack for use in scripts.
 const Dotenv = require('dotenv-webpack');
+// Load .env for use in this file.
+require('dotenv').config();
 
 module.exports = {
   entry: './src/scripts/index.js',
@@ -10,7 +13,8 @@ module.exports = {
     new ESLintPlugin({}),
     new HtmlWebpackPlugin({
       hash: true,
-      template: './src/index.html'
+      template: './src/index.html',
+      recaptchaScript: `${process.env.GRECAPTCHA_API_KEY}`
     })
   ],
   module: {

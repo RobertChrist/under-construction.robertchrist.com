@@ -15,3 +15,9 @@ resource "aws_iam_policy" "cloudwatch__allow_log_group_and_streams__for_lambda_l
 
   policy = data.aws_iam_policy_document.cloudwatch__allow_log_group_and_streams__for_lambda_log_groups.json
 }
+
+resource "aws_iam_policy" "lambda__allow_sns_publish" {
+  name = "lambda__allow_sns_publish"
+
+  policy = data.aws_iam_policy_document.lambda__allow_sns_publish.json
+}

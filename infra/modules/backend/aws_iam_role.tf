@@ -46,6 +46,11 @@ resource "aws_iam_role_policy_attachment" "lambda__log_to_cloudwatch" {
   policy_arn = aws_iam_policy.cloudwatch__allow_log_group_and_streams__for_lambda_log_groups.arn
 }
 
+resource "aws_iam_role_policy_attachment" "lambda__allow_sns_publish" {
+  role       = aws_iam_role.lambda__log_to_cloudwatch_role.name
+  policy_arn = aws_iam_policy.lambda__allow_sns_publish.arn
+}
+
 
 /* -------------- */
 

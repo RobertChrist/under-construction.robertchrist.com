@@ -4,7 +4,7 @@ import logError from '../logError';
 const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
 class ContactForm {
-  #config; #windowRef; #container; #form; #fieldSet; #loadingIcon; #snackBar;
+  #config; #windowRef; #container; #form; #fieldSet; #loadingIcon; #snackBar; #grecaptcha;
   #cssConfig = {
     formContainer: 'contact-form',
     submittedAttr: 'contact-form--submitted',
@@ -14,13 +14,14 @@ class ContactForm {
     toastContainer: 'contact-form__toast-container',
   };
 
-  constructor(config, windowRef, documentRef) {
+  constructor(config, windowRef, documentRef, grecaptcha) {
     this.#config = config;
     this.#windowRef = windowRef;
     this.#container = documentRef.getElementsByClassName(this.#cssConfig.formContainer)[0];
     this.#form = documentRef.getElementsByClassName(this.#cssConfig.contactForm)[0];
     this.#fieldSet = this.#form.children[0];
     this.#loadingIcon = documentRef.getElementsByClassName(this.#cssConfig.loadingIcon)[0];
+    this.#grecaptcha = grecaptcha;
 
     const toastContainer = documentRef.getElementsByClassName(this.#cssConfig.toastContainer)[0];
     this.#snackBar = new SnackBar(toastContainer, this.#windowRef);
@@ -39,20 +40,26 @@ class ContactForm {
   async #submitForm() {
     try {
       const data = new FormData(this.#form);
-      data.append('callingApp', this.#config.appName);
 
       this.#setFormStatus(false);
 
-      const temp = {};
+      await (new Promise((resolve) => this.#grecaptcha.ready(resolve)));
+      const token = await this.#grecaptcha.execute(this.#config.grecaptchaApiKey, {action: 'submit'});
+
+      const payload = {
+        'callingApp': this.#config.appName,
+        'token': token,
+      };
+
       data.forEach(function(value, key) {
-        temp[key] = value;
+        payload[key] = value;
       });
 
       const response = await fetch(this.#config.contactFormUri, {
         method: 'post',
         mode: 'cors',
         // body: JSON.stringify(Object.fromEntries(data)), babel doesn't polyfill fromEntries consistently. 1/14/2022
-        body: JSON.stringify(temp),
+        body: JSON.stringify(payload),
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': this.#config.apiKey,

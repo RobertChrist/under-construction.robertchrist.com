@@ -9,7 +9,7 @@
     "command organization": "static assets are handled by bash, css is handled by sass for preprocess and postcss for post-processing.  Webpack handles js, and running a local dev server."
   },
   "scripts": {
-    "static:lint": "html-validator --file=./src/index.html",
+    "static:lint": "html-validator --file=./src/index.html --verbose --ignore='Error: Bad value “https://www.google.com/recaptcha/api.js?render=<%= htmlWebpackPlugin.options.recaptchaScript %>” for attribute “src” on element “script”: Illegal character in query: “<” is not allowed.'",
     "static:build": "bash -c 'cp -r ./src/{css,images,index.html,*.png,browserconfig.xml,favicon.ico,*.svg,site.webmanifest} ./dist'",
     "css:lint": "npx stylelint 'src/**/*.scss'",
     "css:preprocess": "sass src/scss/:dist/css --no-source-map",
@@ -44,6 +44,7 @@
     "babel-loader": "^8.2.2",
     "concurrently": "^6.3.0",
     "cssnano": "^5.0.8",
+    "dotenv": "^16.3.1",
     "dotenv-webpack": "^7.1.0",
     "eslint": "^8.3.0",
     "eslint-config-google": "^0.14.0",
@@ -126,7 +127,8 @@
           "**/*.js"
         ],
         "safelist": [
-          "background__imgHolder--movement"
+          "background__imgHolder--movement",
+          "grecaptcha-badge"
         ]
       },
       "cssnano": {

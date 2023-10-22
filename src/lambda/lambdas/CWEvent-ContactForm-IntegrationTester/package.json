@@ -12,8 +12,9 @@
   },
   "author": "Robert Christ",
   "license": "ISC",
-  "notes": {
-    "lambda version": "Tested and deployed with node 14.18.1, as aws lambda supports node 14 as latest"
+  "notes": { },
+  "engines": {
+    "node": "v14.18.1"
   },
   "dependencies": {
     "dotenv": "^10.0.0",

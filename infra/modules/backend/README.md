@@ -24,7 +24,7 @@ This repository is a serverless application.  Requests from the website are sent
 Requests that successfully make their way through API gateway are then passed on to SNS.  This allows us to handle the incoming requests asyncronously, and makes the website far more responsive.
 
 * **SNS Subscribers**
-SNS subscribers are used to notify the repository owner via email and sms whenever an error or new contact request is made via the website.  SNS then additionally triggers a lambda function.
+SNS subscribers are used to notify the repository owner via email whenever an error or new contact request is made via the website.  SNS then additionally triggers a lambda function.
 
 * **Lambda**
 [/src/lambdas/lambda/SNSListener-ContactForm-Emailer](/src/lambdas/lambda/SNSListener-ContactForm-Emailer) is triggered from SNS if the incoming request was a contact request.  Depending on the version of this repository you are looking at, this lambda is likely either configured to email the repository owner, or respond to the website user, automatically, from a custom domain gmail account.

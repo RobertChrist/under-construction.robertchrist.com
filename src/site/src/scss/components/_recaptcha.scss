@@ -1,0 +1,19 @@
+@use "../_config";
+
+.grecaptcha-badge { visibility: hidden; }
+
+.recaptcha {
+  &__container {
+    overflow-wrap: break-word;
+    font-size: config.get_font(small-size);
+    max-width: config.get_misc(contact-form-width);
+    color: config.get_palette(fg-light);
+    text-align: center;
+  }
+}
+
+.contact-form {
+  fieldset {
+    margin-bottom: 0;
+  }
+}

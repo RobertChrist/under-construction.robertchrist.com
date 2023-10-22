@@ -25,11 +25,14 @@ resource "aws_api_gateway_model" "contact_form__post" {
         },
         "callingApp": {
           "type": "string"
+        },
+        "token": {
+          "type": "string"
         }
       },
       "additionalProperties": false,
       "required": [
-        "name", "email", "callingApp"
+        "name", "email", "callingApp", "token"
       ]   
     }
 EOT

@@ -21,6 +21,22 @@ variable "s3_header_secret_key" {
   }
 }
 
+variable "recaptcha_secret_key" {
+  type        = string
+  description = "The secret key for the recaptcha token, available at https://www.google.com/u/3/recaptcha/admin."
+  nullable    = false
+  validation {
+    condition     = length(var.recaptcha_secret_key) > 16
+    error_message = "The recaptcha secret key should be a long string."
+  }
+}
+
+variable "google_recaptcha_key_name" {
+  type        = string
+  description = "The name of the google recaptcha key."
+  nullable    = false
+}
+
 #for use by modules/email for email_custom_domain submodule
 variable "googleworkspace_provided_dkim_key" {
   type        = string

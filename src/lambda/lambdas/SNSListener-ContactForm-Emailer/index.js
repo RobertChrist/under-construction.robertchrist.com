@@ -2,11 +2,41 @@ const config = require('dotenv').config();
 const nodemailer = require('nodemailer');
 const {google} = require('googleapis');
 const OAuth2 = google.auth.OAuth2;
+const SNS = new (require('aws-sdk')).SNS();
 
 const ensureConfig = () => {
     if (config.error)
         throw config.error;
 };
+
+const validateGRecaptchaToken = async (env, token) => {
+    const response = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+        method: 'POST',
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `secret=${env.grecaptchaSecretKey}&response=${token}`
+    });
+
+    const data = await response.json();
+    console.log('recaptcha responded with: ' + JSON.stringify(data));
+      
+    return data.success;
+};
+
+const sendSMS = async (env, passCaptcha, contactInfo) => {
+    const data = JSON.stringify(contactInfo);
+    const msg = passCaptcha ? data : 'Message failed captcha: ' + data;
+    
+    const payload = {
+        'PhoneNumber': env.phoneNumber,
+        'Message': msg
+    };
+    
+    console.log("Sending sms message: " + JSON.stringify(payload));
+
+    return await (new Promise((resolve, reject) => 
+        SNS.publish(payload,(err, data) => err ? reject(err) : resolve(data))
+    ));
+}
 
 const getEmailMessage = (name, callingApp, emailAddress, message) => {
     return {
@@ -79,6 +109,13 @@ const main = async (context, event) => {
         const data = JSON.parse(context.Records[0].Sns.Message);
 
         console.log('with this data ' + JSON.stringify(data));
+
+        const {token, ...contactInfo} = data;
+        const passCaptcha = await validateGRecaptchaToken(process.env, token);
+        await sendSMS(process.env, passCaptcha, contactInfo);
+
+        if (!passCaptcha)
+            return console.warn('This event failed recaptcha verification');
 
         const msg = getEmailMessage(data.name, data.callingApp, data.email, data.message);
         const accessToken = await getAccessToken(process.env);

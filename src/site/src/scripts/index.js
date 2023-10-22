@@ -18,7 +18,7 @@ const convertErr = (err) => {
   try {
     toggleJs.enable();
     animateBackgroundImages();
-    new ContactForm(config, window, document).attach();
+    new ContactForm(config, window, document, window.grecaptcha).attach();
   } catch (err) {
     toggleJs.displayErrorMessage('Apologies, This Widget Appears to be Incompatible with your Browser.');
     logError(config, convertErr(err));
